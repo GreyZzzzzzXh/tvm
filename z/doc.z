@@ -1,0 +1,18 @@
+# https://tvm.apache.org/docs/install/from_source.html
+
+mkdir build
+cp cmake/config.cmake build
+
+# Edit build/config.cmake to customize the compilation options
+
+cd build
+# cmake ..
+# cmake -DCUDA_CUDART_LIBRARY=/usr/local/cuda-11.1/lib64/libcudart.so ..
+# 以下很关键, libcuda.so 必须使用与 driver 对应的版本 (安装 driver的同时会自动安装对应 libcuda.so), 否则无法调用 GPU
+cmake -D_CUDA_CUDA_LIBRARY=/usr/lib/x86_64-linux-gnu/libcuda.so ..
+make -j16
+cd ..
+
+cd python
+python setup.py install
+cd ..
